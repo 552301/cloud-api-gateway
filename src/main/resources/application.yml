@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: zuul-server
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://121.42.143.130:3306/zuul-server
+    username: root
+    password: zhanwei
+  cloud:
+    consul:
+      host: 121.42.143.130
+      port: 8500
+      enabled: true
+      discovery:
+        health-check-path: /actuator/health
+logging:
+  level:
+    ROOT: info
