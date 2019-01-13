@@ -6,6 +6,11 @@
 #### Software Architecture
 Software architecture description
 
+#### Develop Plan
+1. 网关路由web端配置管理
+2. 用户管理，权限管理
+3. error页面设计
+
 #### Installation
 
 1. xxxx
