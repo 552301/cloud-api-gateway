@@ -3,11 +3,14 @@ package com.cloud.zuul.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "zuul_route_info")
+@Table(name = "sys_zuul_route_info")
 public class ZuulRouteInfo {
 
     @Id

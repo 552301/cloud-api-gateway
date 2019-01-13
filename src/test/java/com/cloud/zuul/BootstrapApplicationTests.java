@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -17,10 +18,18 @@ public class BootstrapApplicationTests {
     @Autowired
     private ZuulRouteInfoDao zuulRouteInfoDao;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Test
     public void contextLoads() {
         List<ZuulRouteInfo> list = zuulRouteInfoDao.findAll();
         System.out.println(list);
+    }
+
+    @Test
+    public void encode() {
+        System.out.println(passwordEncoder.encode("123456"));
     }
 
 }

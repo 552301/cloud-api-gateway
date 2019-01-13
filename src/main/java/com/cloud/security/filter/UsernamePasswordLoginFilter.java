@@ -1,0 +1,99 @@
+package com.cloud.security.filter;
+
+import com.cloud.common.RestCodeEnum;
+import com.cloud.common.ResultBody;
+import com.google.gson.Gson;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
+
+
+/**
+ * 当客户端使用 POST /login 发起登陆请求时，才会进入这个过滤器
+ * UsernamePasswordLoginFilter 主要完成了用户名与密码的校验工作
+ */
+@Slf4j
+public class UsernamePasswordLoginFilter extends UsernamePasswordAuthenticationFilter {
+
+    private String AUTHORIZATION_SECRET;
+    private String AUTHORIZATION_HEADER_KEY;
+    private String AUTHORIZATION_SALT_KEY;
+
+    public UsernamePasswordLoginFilter(String key, String secret, String salt) {
+        this.AUTHORIZATION_HEADER_KEY = key;
+        this.AUTHORIZATION_SECRET = secret;
+        this.AUTHORIZATION_SALT_KEY = salt;
+    }
+
+    public void afterProperty(AuthenticationManager authenticationManager) {
+        setAuthenticationManager(authenticationManager);
+    }
+
+    // 接收并解析用户凭证
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest req,
+                                                HttpServletResponse res) throws AuthenticationException {
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        log.info("登陆请求，用户名是：{}", username);
+        return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(username, password));
+    }
+
+    // 用户成功登录后，这个方法会被调用，我们在这个方法里生成token
+    @Override
+    protected void successfulAuthentication(HttpServletRequest req,
+                                            HttpServletResponse res,
+                                            FilterChain chain,
+                                            Authentication auth) throws IOException, ServletException {
+        String token = Jwts.builder()
+                .setSubject(auth.getName())
+                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000))
+                .signWith(SignatureAlgorithm.HS512, AUTHORIZATION_SECRET)
+                .compact();
+        String saltToken = AUTHORIZATION_SALT_KEY + token;
+        Gson gson = new Gson();
+        ResultBody body = ResultBody.success(RestCodeEnum.SUCCESS, saltToken);
+
+
+        res.setContentType("application/json;charset=utf-8");
+        Cookie cookie = new Cookie(AUTHORIZATION_HEADER_KEY, token);
+        res.addCookie(cookie);
+        res.addHeader(AUTHORIZATION_HEADER_KEY, saltToken);
+        PrintWriter printWriter = res.getWriter();
+        printWriter.print(gson.toJson(body));
+        printWriter.close();
+
+    }
+
+
+    /**
+     * 用户登陆失败之后，将会调用这个方法
+     */
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        SecurityContextHolder.clearContext();
+        Gson gson = new Gson();
+        ResultBody body = ResultBody.success(RestCodeEnum.LOGIN_FAILED, "请检查账号和密码，重新登陆");
+
+        response.setContentType("application/json;charset=utf-8");
+        PrintWriter printWriter = response.getWriter();
+        printWriter.print(gson.toJson(body));
+        printWriter.close();
+    }
+
+}
