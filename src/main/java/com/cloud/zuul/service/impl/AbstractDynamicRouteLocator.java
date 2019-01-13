@@ -30,7 +30,7 @@ public abstract class AbstractDynamicRouteLocator extends SimpleRouteLocator imp
     }
 
     @Override
-    protected Map<String, ZuulProperties.ZuulRoute> locateRoutes(){
+    protected Map<String, ZuulProperties.ZuulRoute> locateRoutes() {
         HashMap<String, ZuulProperties.ZuulRoute> routeLinkedHashMap = new HashMap<>();
         routeLinkedHashMap.putAll(super.locateRoutes());
         routeLinkedHashMap.putAll(getDynamicRoute());

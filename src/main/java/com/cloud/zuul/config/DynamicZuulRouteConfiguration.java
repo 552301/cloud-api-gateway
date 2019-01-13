@@ -20,11 +20,11 @@ public class DynamicZuulRouteConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(DynamicZuulRouteLocator.class)
-    public DynamicZuulRouteLocator dynamicZuulRouteLocator(){
+    public DynamicZuulRouteLocator dynamicZuulRouteLocator() {
         if (null == zuulProperties) {
             zuulProperties = new ZuulProperties();
         }
-        DynamicZuulRouteLocator routeLocator = new DynamicZuulRouteLocator(this.serverProperties.getServlet().getContextPath(),this.zuulProperties);
+        DynamicZuulRouteLocator routeLocator = new DynamicZuulRouteLocator(this.serverProperties.getServlet().getContextPath(), this.zuulProperties);
         return routeLocator;
     }
 
