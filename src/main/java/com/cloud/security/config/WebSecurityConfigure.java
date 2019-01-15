@@ -1,6 +1,5 @@
 package com.cloud.security.config;
 
-import com.cloud.security.filter.CustomAccessDeniedFilter;
 import com.cloud.security.filter.TokenFilterSecurityInterceptor;
 import com.cloud.security.filter.UsernamePasswordLoginFilter;
 import com.cloud.security.service.JwtTokenAuthentication;
@@ -37,11 +36,9 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtTokenAuthentication jwtAuthenticationToken;
 
-    @Autowired
-    private TokenFilterSecurityInterceptor tokenFilterSecurityInterceptor;
 
     @Autowired
-    private CustomAccessDeniedFilter customAccessDeniedFilter;
+    private TokenFilterSecurityInterceptor tokenFilterSecurityInterceptor;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -56,8 +53,6 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
                 .and().cors()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable()
-                .exceptionHandling().accessDeniedHandler(customAccessDeniedFilter)
-                .and()
                 .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(tokenFilterSecurityInterceptor, UsernamePasswordAuthenticationFilter.class);
     }
@@ -72,5 +67,6 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
 }

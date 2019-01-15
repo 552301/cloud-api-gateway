@@ -10,6 +10,11 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -33,10 +38,13 @@ public class JwtTokenAuthentication implements AuthenticationProvider {
         String token = authentication.getCredentials().toString();
 
         if (identify(token)) {
-            log.debug("Token解析成功");
-            return new JwtAuthenticationToken(header, token, null);
+            log.info("Token解析成功");
+            List<GrantedAuthority> roles = new ArrayList<>();
+            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("TOKEN");
+            roles.add(simpleGrantedAuthority);
+            return new JwtAuthenticationToken(header, token, roles);
         } else {
-            log.debug("Token解析错误");
+            log.info("Token解析错误");
             throw new BadCredentialsException("Token已经失效，请重新登陆");
         }
     }
@@ -50,7 +58,8 @@ public class JwtTokenAuthentication implements AuthenticationProvider {
     private boolean identify(String token) {
         if (token != null) {
             try {
-                Jwts.parser().setSigningKey(SECRET)
+                Jwts.parser()
+                        .setSigningKey(SECRET)
                         .parseClaimsJws(token.substring(AUTHORIZATION_SALT_KEY.length()));
                 return true;
             } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {

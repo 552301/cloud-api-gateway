@@ -15,11 +15,16 @@ spring:
       discovery:
         health-check-path: /actuator/health
 
+### 日志级别
 logging:
   level:
     ROOT: info
 
 
+######### Token相关配置
+### secret 计算token用到的签名
+### header 客户端发起请求时，Token对应的key值
+### salt token的前缀
 security:
   secret: https://github.com/hzwy23
   header: Authorization

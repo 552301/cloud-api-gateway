@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         SysUserSecurity element = sysUserSecurityDao.findByUsername(s);
         if (element == null) {
-            log.debug("用户不存在，{}", s);
+            log.info("用户不存在，{}", s);
             throw new UsernameNotFoundException("用户名不存在");
         }
         return new User(element.getUsername(), element.getPassword(), new ArrayList<>());
