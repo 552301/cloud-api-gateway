@@ -35,11 +35,19 @@ public class TokenFilterSecurityInterceptor extends OncePerRequestFilter {
         log.info("Token 拦截器 -> 请求方式是：{}, 请求路由是：{}", httpServletRequest.getMethod(), httpServletRequest.getRequestURL().toString());
 
         String token = getToken(httpServletRequest);
+        String path = httpServletRequest.getRequestURI();
+
+        if ("/oauth/token".equals(path)) {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+            return;
+        }
+
 
         if (null != token) {
             log.info("从请求中获取到了Token信息，根据Token校验用户身份");
             JwtAuthenticationToken customToken = new JwtAuthenticationToken(AUTHORIZATION_HEADER_KEY, token);
             SecurityContextHolder.getContext().setAuthentication(customToken);
+
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }

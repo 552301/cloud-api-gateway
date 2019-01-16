@@ -1,4 +1,4 @@
-package com.cloud.security.config;
+package com.cloud.common;
 
 
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;

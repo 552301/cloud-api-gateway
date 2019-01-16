@@ -8,13 +8,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 
 /**
@@ -39,10 +36,7 @@ public class JwtTokenAuthentication implements AuthenticationProvider {
 
         if (identify(token)) {
             log.info("Token解析成功");
-            List<GrantedAuthority> roles = new ArrayList<>();
-            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("TOKEN");
-            roles.add(simpleGrantedAuthority);
-            return new JwtAuthenticationToken(header, token, roles);
+            return new JwtAuthenticationToken(header,token,null);
         } else {
             log.info("Token解析错误");
             throw new BadCredentialsException("Token已经失效，请重新登陆");
