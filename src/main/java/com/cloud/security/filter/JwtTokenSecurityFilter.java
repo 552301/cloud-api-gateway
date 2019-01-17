@@ -1,6 +1,7 @@
 package com.cloud.security.filter;
 
 import com.cloud.security.util.JwtAuthenticationToken;
+import com.cloud.security.util.WhiteListToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -14,14 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 /**
- * 经过认证后，才会进入这个过滤器
- * 如果用户没有登陆系统，不会进入这个过滤器
+ * 对用户进行进行判断，
+ * 1. 白名单中地址，直接放过
+ * 2. Jwt token校验
+ * 3. 不做处理，放入登陆校验
+ * 4。Oauth2 校验
  */
 @Configuration
 @Slf4j
-public class TokenFilterSecurityInterceptor extends OncePerRequestFilter {
+public class JwtTokenSecurityFilter extends OncePerRequestFilter {
 
     @Value("${security.header}")
     private String AUTHORIZATION_HEADER_KEY = "Authorization";
@@ -42,13 +45,12 @@ public class TokenFilterSecurityInterceptor extends OncePerRequestFilter {
             return;
         }
 
-
         if (null != token) {
             log.info("从请求中获取到了Token信息，根据Token校验用户身份");
             JwtAuthenticationToken customToken = new JwtAuthenticationToken(AUTHORIZATION_HEADER_KEY, token);
             SecurityContextHolder.getContext().setAuthentication(customToken);
-
         }
+
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 

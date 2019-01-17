@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 
 /**
@@ -26,6 +24,7 @@ public class JwtTokenAuthentication implements AuthenticationProvider {
 
     @Value("${security.salt}")
     private String AUTHORIZATION_SALT_KEY = "Bearer ";
+
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

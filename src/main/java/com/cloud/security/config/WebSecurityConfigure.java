@@ -1,9 +1,11 @@
 package com.cloud.security.config;
 
-import com.cloud.security.filter.TokenFilterSecurityInterceptor;
+import com.cloud.security.filter.JwtTokenSecurityFilter;
 import com.cloud.security.filter.UsernamePasswordLoginFilter;
+import com.cloud.security.filter.WhiteListFilter;
 import com.cloud.security.service.JwtTokenAuthentication;
 import com.cloud.security.service.UsernamePasswordAuthentication;
+import com.cloud.security.service.WhiteListAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
@@ -34,18 +37,27 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
     @Autowired
     private UsernamePasswordAuthentication usernamePasswordAuthentication;
 
+    // 负责拦截Jwt Token校验
     @Autowired
     private JwtTokenAuthentication jwtAuthenticationToken;
 
-
     @Autowired
-    private TokenFilterSecurityInterceptor tokenFilterSecurityInterceptor;
+    private WhiteListFilter whiteListFilter;
+
+    // 白名单过滤，白名单请求不进行权限校验
+    @Autowired
+    private WhiteListAuthentication whiteListAuthentication;
+
+    // 注入自自定义过滤器
+    @Autowired
+    private JwtTokenSecurityFilter jwtTokenSecurityFilter;
+
+    // 负责拦截登陆请求
+    @Autowired
+    private UsernamePasswordLoginFilter usernamePasswordLoginFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        UsernamePasswordLoginFilter loginFilter = new UsernamePasswordLoginFilter(AUTHORIZATION_HEADER_KEY, AUTHORIZATION_SECRET, AUTHORIZATION_SALT_KEY);
-        loginFilter.afterProperty(authenticationManagerBean());
-
         http.authorizeRequests()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/login").permitAll()
@@ -54,15 +66,19 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
                 .and().cors()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable()
-                .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(tokenFilterSecurityInterceptor, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(whiteListFilter,UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(usernamePasswordLoginFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtTokenSecurityFilter, FilterSecurityInterceptor.class);
     }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(usernamePasswordAuthentication)
-                .authenticationProvider(jwtAuthenticationToken);
+                .authenticationProvider(jwtAuthenticationToken)
+                .authenticationProvider(whiteListAuthentication);
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

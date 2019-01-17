@@ -6,13 +6,18 @@ import com.google.gson.Gson;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -28,21 +33,32 @@ import java.util.Date;
  * UsernamePasswordLoginFilter 主要完成了用户名与密码的校验工作
  */
 @Slf4j
-public class UsernamePasswordLoginFilter extends UsernamePasswordAuthenticationFilter {
+@Configuration
+public class UsernamePasswordLoginFilter extends AbstractAuthenticationProcessingFilter {
 
+    @Value("${security.secret}")
     private String AUTHORIZATION_SECRET;
+
+    @Value("${security.header}")
     private String AUTHORIZATION_HEADER_KEY;
+
+    @Value("${security.salt}")
     private String AUTHORIZATION_SALT_KEY;
 
-    public UsernamePasswordLoginFilter(String key, String secret, String salt) {
-        this.AUTHORIZATION_HEADER_KEY = key;
-        this.AUTHORIZATION_SECRET = secret;
-        this.AUTHORIZATION_SALT_KEY = salt;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    public UsernamePasswordLoginFilter() {
+        super(new AntPathRequestMatcher("/login", "POST"));
     }
 
-    public void afterProperty(AuthenticationManager authenticationManager) {
+
+    @PostConstruct
+    public void init() {
+        log.info("设置 authenticationManager");
         setAuthenticationManager(authenticationManager);
     }
+
 
     // 接收并解析用户凭证
     @Override
