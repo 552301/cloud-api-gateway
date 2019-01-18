@@ -9,14 +9,12 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -35,18 +33,28 @@ public class UsernamePasswordAuthentication implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         // 获取认证的用户名 & 密码
-        String username = authentication.getPrincipal().toString();
+        Object username = authentication.getPrincipal();
 
-        String password = authentication.getCredentials().toString();
+        Object password = authentication.getCredentials();
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (username == null || password == null) {
+            log.info("用户名或密码为空，用户名是：{}", username);
+            throw new BadCredentialsException("用户名或密码为空值");
+        }
 
-        if (username.equals(userDetails.getUsername()) && passwordEncoder.matches(password, userDetails.getPassword())) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username.toString());
+
+        if (userDetails == null) {
+            log.info("用户不存在，用户名是：{}", username);
+            throw new BadCredentialsException("用户不存在");
+        }
+
+        if (username.equals(userDetails.getUsername()) && passwordEncoder.matches(password.toString(), userDetails.getPassword())) {
             log.info("用户名密码校验成功.用户名是：{}", username);
-            List<GrantedAuthority> roles = new ArrayList<>();
-            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("TOKEN");
-            roles.add(simpleGrantedAuthority);
-            return new UsernamePasswordAuthenticationToken(username, password, roles);
+            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("PasswordToken");
+            return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>() {{
+                add(simpleGrantedAuthority);
+            }});
         } else {
             log.info("用户名或密码错误，用户名是：{}", userDetails);
             throw new BadCredentialsException("用户名或密码错误");

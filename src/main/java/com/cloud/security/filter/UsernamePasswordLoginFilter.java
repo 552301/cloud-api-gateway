@@ -55,7 +55,6 @@ public class UsernamePasswordLoginFilter extends AbstractAuthenticationProcessin
 
     @PostConstruct
     public void init() {
-        log.info("设置 authenticationManager");
         setAuthenticationManager(authenticationManager);
     }
 

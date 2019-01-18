@@ -58,13 +58,14 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
                 .and().cors()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
                 .and().csrf().disable()
                 .addFilterBefore(whiteListFilter,UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(usernamePasswordLoginFilter, UsernamePasswordAuthenticationFilter.class)

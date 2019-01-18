@@ -1,10 +1,10 @@
 package com.cloud.security.filter;
 
 import com.cloud.security.util.JwtAuthenticationToken;
-import com.cloud.security.util.WhiteListToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -26,6 +26,9 @@ import java.io.IOException;
 @Slf4j
 public class JwtTokenSecurityFilter extends OncePerRequestFilter {
 
+    // 匿名授权标识符
+    private final String ANONYMOUS_USER = "anonymousUser";
+
     @Value("${security.header}")
     private String AUTHORIZATION_HEADER_KEY = "Authorization";
 
@@ -37,16 +40,12 @@ public class JwtTokenSecurityFilter extends OncePerRequestFilter {
 
         log.info("Token 拦截器 -> 请求方式是：{}, 请求路由是：{}", httpServletRequest.getMethod(), httpServletRequest.getRequestURL().toString());
 
-        String token = getToken(httpServletRequest);
-        String path = httpServletRequest.getRequestURI();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
 
-        if ("/oauth/token".equals(path)) {
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-            return;
-        }
-
-        if (null != token) {
-            log.info("从请求中获取到了Token信息，根据Token校验用户身份");
+        if (principal == null || ANONYMOUS_USER.equals(principal.toString())) {
+            log.info("从请求中获取到了Token信息，根据Token校验用户身份, authentication is: {}", authentication);
+            String token = getToken(httpServletRequest);
             JwtAuthenticationToken customToken = new JwtAuthenticationToken(AUTHORIZATION_HEADER_KEY, token);
             SecurityContextHolder.getContext().setAuthentication(customToken);
         }
