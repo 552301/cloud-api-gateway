@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * 白名单管理
  * 如果客户单发起的请求地址是白名单列表中地址，则不需要进行后续的校验
- * */
+ */
 @Configuration
 @Slf4j
 public class WhiteListFilter extends OncePerRequestFilter {
@@ -24,7 +24,7 @@ public class WhiteListFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String path = httpServletRequest.getRequestURI();
         if ("/gateway/refresh".equals(path)) {
-            log.info("白名单资源，url 是: {}",path);
+            log.info("白名单资源，url 是: {}", path);
             WhiteListToken whiteList = new WhiteListToken("whiteList", path);
             SecurityContextHolder.getContext().setAuthentication(whiteList);
         }

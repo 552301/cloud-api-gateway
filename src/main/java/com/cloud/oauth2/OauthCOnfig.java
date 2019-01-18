@@ -17,12 +17,12 @@ public class OauthCOnfig {
     private DataSource dataSource;
 
     @Bean
-    public TokenStore tokenStore(){
+    public TokenStore tokenStore() {
         return new JdbcTokenStore(dataSource);
     }
 
     @Bean
-    public ClientDetailsService jdbcClientDetailsService(){
+    public ClientDetailsService jdbcClientDetailsService() {
         return new JdbcClientDetailsService(dataSource);
     }
 }

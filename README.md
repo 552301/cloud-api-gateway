@@ -1,7 +1,10 @@
 # cloud-zuul
 
 #### Description
-{**When you're done, you can delete the content in this README and update the file with details for others getting started with your repository**}
+1. API网关
+2. 权限管理
+3. 日志监控
+4. Oauth2 鉴权管理
 
 #### Software Architecture
 Software architecture description
@@ -19,9 +22,10 @@ Software architecture description
 
 #### Instructions
 
-1. xxxx
-2. xxxx
-3. xxxx
+1. zuul边缘服务，默认支持consul注册中心；
+2. 实现API网关动态路由功能。新增、修改、删除路由配置无需重启服务，通过API接口刷新立刻生效；
+3. spring-security 权限控制。支持白名单动态配置（默认存储在数据库）, 账号管理，授权管理；
+4. spring-securit-oauth 支持授权、鉴权。支持动态配置授权client_id和client_secret.
 
 #### Contribution
 

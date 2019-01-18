@@ -19,20 +19,19 @@ public class Oauth2Controller {
     private RestTemplate restTemplate;
 
     @GetMapping(value = "/oauth/default/callback")
-    public void back(@RequestParam(value = "code") String code, HttpServletRequest request){
+    public void back(@RequestParam(value = "code") String code, HttpServletRequest request) {
         log.info("Get callback code is: {}", code);
         MultiValueMap<String, String> requestEntity = new LinkedMultiValueMap<>();
         requestEntity.add("grant_type", "authorization_code");
         requestEntity.add("code", code);
         requestEntity.add("client_id", "client");
-        requestEntity.add("client_secret","123456");
-        requestEntity.add("scope","all");
-        requestEntity.add("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTQ3NjU1NjUzfQ.1LNvMwNZIEU8jClQQsI-p8Fud4lCnRtbL6AS8a1mFnXWvesGpkijy3zLWMlrtHUSKi13MQjBHNSzkSYroKDyCw");
+        requestEntity.add("client_secret", "123456");
+        requestEntity.add("scope", "all");
         requestEntity.add("redirect_uri", "http://localhost:8080/oauth/default/callback");
         try {
-            String result = restTemplate.postForObject("http://client:123456@localhost:8080/oauth/token",requestEntity, String.class);
+            String result = restTemplate.postForObject("http://client:123456@localhost:8080/oauth/token", requestEntity, String.class);
             log.info("result is: {}", result);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
         }
 
