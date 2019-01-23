@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.Iterator;
 
 
 /**
@@ -74,7 +76,7 @@ public class UsernamePasswordLoginFilter extends AbstractAuthenticationProcessin
     protected void successfulAuthentication(HttpServletRequest req,
                                             HttpServletResponse res,
                                             FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
+                                            Authentication auth) throws IOException {
         String token = Jwts.builder()
                 .setSubject(auth.getName())
                 .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000))

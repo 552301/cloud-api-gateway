@@ -21,6 +21,7 @@ logging:
     ROOT: info
 
 
+
 ######### Token相关配置
 ### secret 计算token用到的签名
 ### header 客户端发起请求时，Token对应的key值

@@ -1,4 +1,4 @@
-# cloud-zuul
+# Cloud-Api-Gateway
 
 #### Description
 1. API网关
@@ -16,9 +16,10 @@ Software architecture description
 
 #### Installation
 
-1. xxxx
-2. xxxx
-3. xxxx
+```jshelllanguage
+$:  mvn clean package -DskipTests=true
+```
+
 
 #### Instructions
 

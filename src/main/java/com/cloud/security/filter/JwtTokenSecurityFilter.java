@@ -41,13 +41,15 @@ public class JwtTokenSecurityFilter extends OncePerRequestFilter {
         log.info("Token 拦截器 -> 请求方式是：{}, 请求路由是：{}", httpServletRequest.getMethod(), httpServletRequest.getRequestURL().toString());
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = authentication.getPrincipal();
 
-        if (principal == null || ANONYMOUS_USER.equals(principal.toString())) {
-            log.info("从请求中获取到了Token信息，根据Token校验用户身份, authentication is: {}", authentication);
-            String token = getToken(httpServletRequest);
-            JwtAuthenticationToken customToken = new JwtAuthenticationToken(AUTHORIZATION_HEADER_KEY, token);
-            SecurityContextHolder.getContext().setAuthentication(customToken);
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+            if (principal == null || ANONYMOUS_USER.equals(principal.toString())) {
+                log.info("从请求中获取到了Token信息，根据Token校验用户身份, authentication is: {}", authentication);
+                String token = getToken(httpServletRequest);
+                JwtAuthenticationToken customToken = new JwtAuthenticationToken(AUTHORIZATION_HEADER_KEY, token);
+                SecurityContextHolder.getContext().setAuthentication(customToken);
+            }
         }
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);

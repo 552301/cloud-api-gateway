@@ -4,9 +4,9 @@ package com.cloud.security.controller;
 import com.cloud.common.RestCodeEnum;
 import com.cloud.common.ResultBody;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -17,7 +17,6 @@ public class SecurityController {
     public String login() {
         return "login";
     }
-
 
     // 400
     @RequestMapping(value = "/error/400", produces = {"text/html"})
@@ -47,8 +46,9 @@ public class SecurityController {
 
     // 403
     @RequestMapping(value = "/error/403", produces = {"text/html"})
-    public String error403Page() {
-        return "/error/403";
+    public String error403Page(HttpServletRequest request) {
+        Object requestUrl = request.getAttribute("javax.servlet.forward.request_uri");
+        return "redirect:/login?redirect="+requestUrl;
     }
 
     @RequestMapping(value = "/error/403")
@@ -58,7 +58,7 @@ public class SecurityController {
     }
 
 
-    // 403
+    // 404
     @RequestMapping(value = "/error/404", produces = {"text/html"})
     public String error404Page() {
         return "/error/404";
