@@ -2,16 +2,16 @@ package com.cloud.zuul.controller;
 
 import com.cloud.common.ResultBody;
 import com.cloud.zuul.service.DynamicZuulRouteService;
+import com.cloud.zuul.vo.ZuulRouteInfoAddParam;
 import com.cloud.zuul.vo.ZuulRouteInfoVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Slf4j
 public class DynamicZuulRouteController {
 
     @Autowired
@@ -27,5 +27,11 @@ public class DynamicZuulRouteController {
     public ResultBody findAll(){
         List<ZuulRouteInfoVo> result = dynamicZuulRouteService.findAll();
         return ResultBody.success(result);
+    }
+
+    @PostMapping(value = "/gateway/routes")
+    public ResultBody add(@RequestBody ZuulRouteInfoAddParam param){
+        log.info("新增路由配置，参数是：{}", param);
+        return dynamicZuulRouteService.add(param);
     }
 }

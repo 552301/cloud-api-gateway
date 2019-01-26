@@ -33,14 +33,14 @@ public class JwtTokenAuthentication implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-        Object header = authentication.getPrincipal();
-
         Object token = authentication.getCredentials();
 
-        if (identify(token)) {
+        Jws<Claims> jwt = identify(token);
+
+        if ( jwt != null ) {
             log.info("Token解析成功");
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority("JwtToken");
-            return new JwtAuthenticationToken(header, token, new ArrayList<>() {{
+            return new JwtAuthenticationToken(jwt.getBody().getId(), token, new ArrayList<>() {{
                 add(authority);
             }});
         } else {
@@ -58,18 +58,17 @@ public class JwtTokenAuthentication implements AuthenticationProvider {
     }
 
 
-    private boolean identify(Object token) {
+    private Jws<Claims> identify(Object token) {
         if (token != null) {
             try {
-                Jwts.parser()
+                return Jwts.parser()
                         .setSigningKey(SECRET)
                         .parseClaimsJws(token.toString().substring(AUTHORIZATION_SALT_KEY.length()));
-                return true;
             } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
                 log.warn(e.getMessage());
-                return false;
+                return null;
             }
         }
-        return false;
+        return null;
     }
 }

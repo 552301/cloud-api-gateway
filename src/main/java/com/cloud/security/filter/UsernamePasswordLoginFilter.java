@@ -77,15 +77,17 @@ public class UsernamePasswordLoginFilter extends AbstractAuthenticationProcessin
                                             HttpServletResponse res,
                                             FilterChain chain,
                                             Authentication auth) throws IOException {
+        Gson gson = new Gson();
+
         String token = Jwts.builder()
                 .setSubject(auth.getName())
                 .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000))
                 .signWith(SignatureAlgorithm.HS512, AUTHORIZATION_SECRET)
+                .setId(auth.getName())
                 .compact();
-        String saltToken = AUTHORIZATION_SALT_KEY + token;
-        Gson gson = new Gson();
-        ResultBody body = ResultBody.success(RestCodeEnum.SUCCESS, saltToken);
 
+        String saltToken = AUTHORIZATION_SALT_KEY + token;
+        ResultBody body = ResultBody.success(RestCodeEnum.SUCCESS, saltToken);
 
         res.setContentType("application/json;charset=utf-8");
         Cookie cookie = new Cookie(AUTHORIZATION_HEADER_KEY, token);

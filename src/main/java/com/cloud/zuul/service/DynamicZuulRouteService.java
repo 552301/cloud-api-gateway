@@ -1,5 +1,7 @@
 package com.cloud.zuul.service;
 
+import com.cloud.common.ResultBody;
+import com.cloud.zuul.vo.ZuulRouteInfoAddParam;
 import com.cloud.zuul.vo.ZuulRouteInfoVo;
 
 import java.util.List;
@@ -11,5 +13,7 @@ public interface DynamicZuulRouteService {
     void refresh();
 
     List<ZuulRouteInfoVo> findAll();
+
+    ResultBody add(ZuulRouteInfoAddParam param);
 
 }

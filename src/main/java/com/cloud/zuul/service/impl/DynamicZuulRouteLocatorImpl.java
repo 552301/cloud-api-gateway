@@ -1,8 +1,11 @@
 package com.cloud.zuul.service.impl;
 
+import com.cloud.common.RestCodeEnum;
+import com.cloud.common.ResultBody;
 import com.cloud.zuul.dao.ZuulRouteInfoDao;
 import com.cloud.zuul.entity.ZuulRouteInfo;
 import com.cloud.zuul.service.DynamicZuulRouteService;
+import com.cloud.zuul.vo.ZuulRouteInfoAddParam;
 import com.cloud.zuul.vo.ZuulRouteInfoVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +46,16 @@ public class DynamicZuulRouteLocatorImpl implements DynamicZuulRouteService {
             ret.add(element);
         }
         return ret;
+    }
+
+    @Override
+    public ResultBody add(ZuulRouteInfoAddParam param) {
+        ZuulRouteInfo args =  new ZuulRouteInfo();
+        BeanUtils.copyProperties(param, args);
+        args = zuulRouteInfoDao.save(args);
+        if (args.getId() == null) {
+            return ResultBody.success(RestCodeEnum.ZUUL_ROUTE_ADD_ERROR,param);
+        }
+        return ResultBody.success();
     }
 }

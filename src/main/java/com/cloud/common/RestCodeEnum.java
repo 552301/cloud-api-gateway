@@ -14,7 +14,10 @@ public enum RestCodeEnum {
     ERROR_500_JSON(500, "Internal Server Error"),
     LOGIN_FAILED(100001, "用户名或密码错误"),
     UNHANDLED_EXCEPTION(100002, "未处理异常"),
-    ACCESS_DENIED(100403, "Access Denied");;
+    ACCESS_DENIED(100403, "Access Denied"),
+    NO_LOGIN(200403,"登陆信息无效，请重新登陆"),
+
+    ZUUL_ROUTE_ADD_ERROR(3000001,"添加路由配置信息失败");
 
     /*********************************************************************/
 
