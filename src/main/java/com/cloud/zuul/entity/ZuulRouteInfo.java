@@ -2,18 +2,20 @@ package com.cloud.zuul.entity;
 
 
 import lombok.Data;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "sys_zuul_route_info")
+@Where(clause = "delete_status = 0")
 public class ZuulRouteInfo {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Integer id;
 
     @Column(name = "path")
     private String path;
@@ -33,12 +35,24 @@ public class ZuulRouteInfo {
     @Column(name = "enabled")
     private boolean enabled;
 
-    @Column(name = "api_name")
-    private String apiName;
-
     @Column(name = "domain_id")
     private String domainId;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "api_name")
+    private String apiName;
+
+    @Column(name = "api_doc")
+    private String apiDoc;
+
+    @Column(name = "update_by")
+    private String updateBy;
+
+    @Column(name = "update_time")
+    private String updateTime;
+
+    @Column(name = "create_by")
+    private String createBy;
+
+    @Column(name = "create_time")
+    private String createTime;
 }

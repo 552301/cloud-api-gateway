@@ -25,5 +25,5 @@ public class ZuulRouteInfoAddParam {
 
     private String domainId;
 
-    private String description;
+    private String apiDoc;
 }

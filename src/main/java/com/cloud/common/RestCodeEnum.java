@@ -16,8 +16,10 @@ public enum RestCodeEnum {
     UNHANDLED_EXCEPTION(100002, "未处理异常"),
     ACCESS_DENIED(100403, "Access Denied"),
     NO_LOGIN(200403,"登陆信息无效，请重新登陆"),
+    ROUTE_ID_NOT_FOUND(100100, "路由ID不存在"),
 
-    ZUUL_ROUTE_ADD_ERROR(3000001,"添加路由配置信息失败");
+    ZUUL_ROUTE_ADD_ERROR(3000001, "添加路由配置信息失败"),
+    ZUUL_ROUTE_UPDATE_ERROR(3000002, "更新路由配置信息失败");
 
     /*********************************************************************/
 

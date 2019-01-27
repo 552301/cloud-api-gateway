@@ -23,7 +23,7 @@ public class WhiteListFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String path = httpServletRequest.getRequestURI();
-        if ("/gateway/refresh".equals(path)) {
+        if ("/white/list".equals(path)) {
             log.info("白名单资源，url 是: {}", path);
             WhiteListToken whiteList = new WhiteListToken("whiteList", path);
             SecurityContextHolder.getContext().setAuthentication(whiteList);
