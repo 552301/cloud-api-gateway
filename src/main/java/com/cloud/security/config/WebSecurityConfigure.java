@@ -61,7 +61,7 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/favicon.ico").permitAll()
-                .antMatchers("/login", "/gateway/auth/routes").permitAll()
+                .antMatchers("/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
                 .and().cors()

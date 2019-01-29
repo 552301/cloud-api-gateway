@@ -38,4 +38,12 @@ public class ResultBody {
         result.setData(data);
         return result;
     }
+
+    public static ResultBody success(int code, String message, Object data) {
+        ResultBody result = new ResultBody();
+        result.setCode(code);
+        result.setMessage(message);
+        result.setData(data);
+        return result;
+    }
 }

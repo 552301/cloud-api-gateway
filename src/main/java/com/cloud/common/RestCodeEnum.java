@@ -18,8 +18,11 @@ public enum RestCodeEnum {
     NO_LOGIN(200403,"登陆信息无效，请重新登陆"),
     ROUTE_ID_NOT_FOUND(100100, "路由ID不存在"),
 
-    ZUUL_ROUTE_ADD_ERROR(3000001, "添加路由配置信息失败"),
-    ZUUL_ROUTE_UPDATE_ERROR(3000002, "更新路由配置信息失败");
+    ZUUL_WHITE_LIST_DELETE_FAILED(3000005, "删除白名单失败"),
+    ZUUL_WHITE_LIST_ADD_FAILED(3000004, "新增白名单失败"),
+    ZUUL_WHITE_LIST_NO_DATA(3000003, "白名单ID不存在"),
+    ZUUL_ROUTE_UPDATE_ERROR(3000002, "更新路由配置信息失败"),
+    ZUUL_ROUTE_ADD_ERROR(3000001, "添加路由配置信息失败");
 
     /*********************************************************************/
 
