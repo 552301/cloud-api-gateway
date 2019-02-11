@@ -21,8 +21,6 @@ logging:
     ROOT: info
 
 
-
-
 ######### Token相关配置
 ### secret 计算token用到的签名
 ### header 客户端发起请求时，Token对应的key值
@@ -31,12 +29,3 @@ security:
   secret: https://github.com/hzwy23
   header: Authorization
   salt: "Bearer "
-
-
-zuul:
-  routes:
-    sys:
-      path: /hello/**
-      url: http://localhost:8090/
-#      serviceId: base-microservice
-      stripPrefix: true

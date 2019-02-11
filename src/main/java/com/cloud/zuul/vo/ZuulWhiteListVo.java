@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ZuulWhiteListVo {
 
-    private Integer id;
+    private String id;
 
     private String path;
 
@@ -15,11 +15,11 @@ public class ZuulWhiteListVo {
 
     private String domainId;
 
-    private String  createBy;
+    private String createBy;
 
     private String createTime;
 
-    private String  updateBy;
+    private String updateBy;
 
     private String updateTime;
 

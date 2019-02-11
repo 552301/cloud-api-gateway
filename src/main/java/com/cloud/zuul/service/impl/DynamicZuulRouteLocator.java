@@ -42,6 +42,7 @@ public class DynamicZuulRouteLocator extends AbstractDynamicRouteLocator {
             }
             routes.put(zuulRoute.getPath(), zuulRoute);
         }
+        log.info("{}", routeList);
         return routes;
     }
 

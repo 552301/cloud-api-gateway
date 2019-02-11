@@ -22,11 +22,11 @@ public class AuthRoutesController {
 
     @ResponseBody
     @GetMapping(value = "/gateway/auth/routes")
-    public ResultBody getAuthRoutes(){
+    public ResultBody getAuthRoutes() {
         Authentication authorization = SecurityContextHolder.getContext().getAuthentication();
         if (authorization == null) {
             log.info("没有授权的用户，请重新登陆");
-            return ResultBody.success(RestCodeEnum.NO_LOGIN,"登陆信息无效，请重新登陆");
+            return ResultBody.success(RestCodeEnum.NO_LOGIN, "登陆信息无效，请重新登陆");
         }
         log.info("请求用户是：{}", authorization.getPrincipal());
 

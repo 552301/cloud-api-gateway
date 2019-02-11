@@ -25,13 +25,13 @@ public class DynamicZuulRouteController {
     }
 
     @GetMapping(value = "/gateway/routes")
-    public ResultBody findAll(){
+    public ResultBody findAll() {
         List<ZuulRouteInfoVo> result = dynamicZuulRouteService.findAll();
         return ResultBody.success(result);
     }
 
     @PostMapping(value = "/gateway/routes")
-    public ResultBody add(@RequestBody ZuulRouteInfoAddParam param){
+    public ResultBody add(@RequestBody ZuulRouteInfoAddParam param) {
         log.info("新增路由配置，参数是：{}", param);
         return dynamicZuulRouteService.add(param);
     }

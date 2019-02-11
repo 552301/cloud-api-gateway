@@ -30,13 +30,13 @@ public class ZuulWhiteList {
     private String domainId;
 
     @Column(name = "create_by")
-    private String  createBy;
+    private String createBy;
 
     @Column(name = "create_time")
     private String createTime;
 
     @Column(name = "update_by")
-    private String  updateBy;
+    private String updateBy;
 
     @Column(name = "update_time")
     private String updateTime;

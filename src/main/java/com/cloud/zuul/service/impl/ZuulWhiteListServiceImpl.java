@@ -36,7 +36,7 @@ public class ZuulWhiteListServiceImpl implements ZuulWhiteListService {
 
     @Override
     public ResultBody delete(Integer id) {
-        int size =  zuulWhiteListDao.logicDelete(id);
+        int size = zuulWhiteListDao.logicDelete(id);
         if (size > 0) {
             return ResultBody.success(RestCodeEnum.ZUUL_WHITE_LIST_DELETE_FAILED);
         }
@@ -64,8 +64,8 @@ public class ZuulWhiteListServiceImpl implements ZuulWhiteListService {
     public ResultBody findALl() {
         List<ZuulWhiteList> result = zuulWhiteListDao.findAll();
         List<ZuulWhiteListVo> ret = new ArrayList<>();
-        if ( !result.isEmpty() ) {
-            for(ZuulWhiteList item : result) {
+        if (!result.isEmpty()) {
+            for (ZuulWhiteList item : result) {
                 ZuulWhiteListVo element = new ZuulWhiteListVo();
                 BeanUtils.copyProperties(item, element);
                 ret.add(element);
@@ -77,6 +77,6 @@ public class ZuulWhiteListServiceImpl implements ZuulWhiteListService {
     @Override
     public boolean isWhitelist(String method, String path) {
         int size = zuulWhiteListDao.findRoute(method, path);
-        return  size > 0;
+        return size > 0;
     }
 }

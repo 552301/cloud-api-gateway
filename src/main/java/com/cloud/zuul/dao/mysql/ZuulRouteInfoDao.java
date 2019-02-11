@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface ZuulRouteInfoDao extends JpaRepository<ZuulRouteInfo, Integer> {
+public interface ZuulRouteInfoDao extends JpaRepository<ZuulRouteInfo, String> {
 
     @Modifying
     @Transactional

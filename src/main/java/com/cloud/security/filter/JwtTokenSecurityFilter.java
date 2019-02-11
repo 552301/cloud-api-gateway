@@ -51,7 +51,6 @@ public class JwtTokenSecurityFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(customToken);
             }
         }
-
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 

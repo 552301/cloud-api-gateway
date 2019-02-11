@@ -14,7 +14,7 @@ public interface ApiAuthRoutesService {
 
     /**
      * 根据用户查询用户所有的角色信息
-     * */
+     */
     @RequestMapping(value = "/system/auth/role", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     Map getApiAuthRoutes(@RequestParam(value = "username") String username);
 }

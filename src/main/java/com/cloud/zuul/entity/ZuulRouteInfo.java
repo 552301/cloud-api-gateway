@@ -14,8 +14,7 @@ public class ZuulRouteInfo {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
     @Column(name = "path")
     private String path;

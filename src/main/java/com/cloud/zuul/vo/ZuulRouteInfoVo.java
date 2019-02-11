@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class ZuulRouteInfoVo {
 
-    private Integer id;
+    private String id;
 
     private String path;
 

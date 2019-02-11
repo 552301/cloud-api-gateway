@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -41,9 +42,9 @@ public class DynamicZuulRouteLocatorImpl implements DynamicZuulRouteService {
     public List<ZuulRouteInfoVo> findAll() {
         List<ZuulRouteInfo> result = zuulRouteInfoDao.findAll();
         List<ZuulRouteInfoVo> ret = new ArrayList<>();
-        for(ZuulRouteInfo item: result) {
+        for (ZuulRouteInfo item : result) {
             ZuulRouteInfoVo element = new ZuulRouteInfoVo();
-            BeanUtils.copyProperties(item,element);
+            BeanUtils.copyProperties(item, element);
             ret.add(element);
         }
         return ret;
@@ -51,11 +52,12 @@ public class DynamicZuulRouteLocatorImpl implements DynamicZuulRouteService {
 
     @Override
     public ResultBody add(ZuulRouteInfoAddParam param) {
-        ZuulRouteInfo args =  new ZuulRouteInfo();
+        ZuulRouteInfo args = new ZuulRouteInfo();
         BeanUtils.copyProperties(param, args);
+        args.setId(UUID.randomUUID().toString().replaceAll("-",""));
         args = zuulRouteInfoDao.save(args);
         if (args.getId() == null) {
-            return ResultBody.success(RestCodeEnum.ZUUL_ROUTE_ADD_ERROR,param);
+            return ResultBody.success(RestCodeEnum.ZUUL_ROUTE_ADD_ERROR, param);
         }
         return ResultBody.success();
     }

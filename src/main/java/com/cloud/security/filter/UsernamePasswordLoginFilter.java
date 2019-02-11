@@ -54,7 +54,6 @@ public class UsernamePasswordLoginFilter extends AbstractAuthenticationProcessin
         super(new AntPathRequestMatcher("/login", "POST"));
     }
 
-
     @PostConstruct
     public void init() {
         setAuthenticationManager(authenticationManager);

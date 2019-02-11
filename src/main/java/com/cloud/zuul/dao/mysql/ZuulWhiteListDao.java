@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface ZuulWhiteListDao extends JpaRepository<ZuulWhiteList,Integer> {
+public interface ZuulWhiteListDao extends JpaRepository<ZuulWhiteList, Integer> {
 
     @Modifying
     @Transactional
