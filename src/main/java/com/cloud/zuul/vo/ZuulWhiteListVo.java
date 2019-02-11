@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ZuulWhiteListVo {
 
-    private String id;
+    private Integer id;
 
     private String path;
 
