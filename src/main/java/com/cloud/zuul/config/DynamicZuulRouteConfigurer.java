@@ -2,6 +2,7 @@ package com.cloud.zuul.config;
 
 
 import com.cloud.zuul.service.impl.DynamicZuulRouteLocator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -10,7 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class DynamicZuulRouteConfiguration {
+@Slf4j
+public class DynamicZuulRouteConfigurer {
 
     @Autowired
     private ZuulProperties zuulProperties;
@@ -25,6 +27,7 @@ public class DynamicZuulRouteConfiguration {
             zuulProperties = new ZuulProperties();
         }
         DynamicZuulRouteLocator routeLocator = new DynamicZuulRouteLocator(this.serverProperties.getServlet().getContextPath(), this.zuulProperties);
+        log.info("初始化动态路由配置");
         return routeLocator;
     }
 

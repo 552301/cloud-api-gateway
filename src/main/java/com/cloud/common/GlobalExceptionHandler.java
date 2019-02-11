@@ -14,6 +14,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResultBody globalException(Exception e) {
         log.error("未处理异常, 异常信息时：{}", e.getMessage());
+        e.printStackTrace();
         ResultBody resultBody = ResultBody.success(RestCodeEnum.UNHANDLED_EXCEPTION, e.getStackTrace());
         return resultBody;
     }

@@ -45,7 +45,7 @@ public class JwtTokenSecurityFilter extends OncePerRequestFilter {
         if (authentication != null) {
             Object principal = authentication.getPrincipal();
             if (principal == null || ANONYMOUS_USER.equals(principal.toString())) {
-                log.info("从请求中获取到了Token信息，根据Token校验用户身份, authentication is: {}", authentication);
+                log.info("从请求中获取到了Token信息，根据Token校验用户身份, authentication is: {}", authentication.getPrincipal());
                 String token = getToken(httpServletRequest);
                 JwtAuthenticationToken customToken = new JwtAuthenticationToken(AUTHORIZATION_HEADER_KEY, token);
                 SecurityContextHolder.getContext().setAuthentication(customToken);
