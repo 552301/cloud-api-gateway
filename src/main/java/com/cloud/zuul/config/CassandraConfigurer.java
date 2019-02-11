@@ -1,6 +1,7 @@
 package com.cloud.zuul.config;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
@@ -15,12 +16,14 @@ import org.springframework.data.cassandra.core.mapping.SimpleUserTypeResolver;
 @Configuration
 public class CassandraConfigurer {
 
+    @Value("${cassandra.host}")
+    private String host;
 
-    private String host = "118.31.46.174";
+    @Value("${cassandra.keyspace}")
+    private String keyspace;
 
-    private String keyspace = "gateway";
-
-    private Integer port = 9042;
+    @Value("${cassandra.port}")
+    private Integer port;
 
     @Bean
     public CassandraClusterFactoryBean cluster() {

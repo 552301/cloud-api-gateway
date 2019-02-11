@@ -18,7 +18,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -67,12 +66,5 @@ public class ControllerListener {
 
         element.setEndTime(String.valueOf(System.currentTimeMillis()));
         zuulForwardLoggerDao.save(element);
-
-        Iterable<ZuulForwardLogger> iterable = zuulForwardLoggerDao.findAll();
-        Iterator iterator = iterable.iterator();
-        while (iterator.hasNext()) {
-            ZuulForwardLogger item = (ZuulForwardLogger) iterator.next();
-            System.out.println(item);
-        }
     }
 }

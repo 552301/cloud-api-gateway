@@ -29,3 +29,8 @@ security:
   secret: https://github.com/hzwy23
   header: Authorization
   salt: "Bearer "
+
+cassandra:
+  host: 118.31.46.174
+  keyspace: gateway
+  port: 9042
