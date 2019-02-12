@@ -43,7 +43,7 @@ public class SecurityController {
     @RequestMapping(value = "/error/403", produces = {"text/html"})
     public String error403Page(HttpServletRequest request) {
         Object requestUrl = request.getAttribute("javax.servlet.forward.request_uri");
-        return "redirect:/user/login?redirect="+requestUrl;
+        return "redirect:/login?redirect="+requestUrl;
     }
 
     @RequestMapping(value = "/error/403")

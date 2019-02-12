@@ -1,25 +1,6 @@
 spring:
-  application:
-    name: zuul-server
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://121.42.143.130:3306/zuul-server
-    username: root
-    password: zhanwei
-  cloud:
-    consul:
-      host: 121.42.143.130
-      port: 8500
-      enabled: true
-      discovery:
-        health-check-path: /actuator/health
-
-### 日志级别
-logging:
-  level:
-    ROOT: info
-
+  profiles:
+    active: dev
 
 ######### Token相关配置
 ### secret 计算token用到的签名
@@ -29,8 +10,5 @@ security:
   secret: https://github.com/hzwy23
   header: Authorization
   salt: "Bearer "
-
-cassandra:
-  host: 118.31.46.174
-  keyspace: gateway
-  port: 9042
+server:
+  port: 8791
