@@ -10,9 +10,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -39,16 +37,10 @@ public class JwtTokenAuthentication implements AuthenticationProvider {
 
         if ( jwt != null ) {
             log.info("Token解析成功");
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority("JwtToken");
-            return new JwtAuthenticationToken(jwt.getBody().getId(), token, new ArrayList<>() {{
-                add(authority);
-            }});
+            return new JwtAuthenticationToken(jwt.getBody().getId(), token, null);
         } else {
             log.info("Token解析错误");
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority("AnonymousUser");
-            return new AnonymousAuthenticationToken(UUID.randomUUID().toString(), "anonymousUser", new ArrayList<>() {{
-                add(authority);
-            }});
+            return new AnonymousAuthenticationToken(UUID.randomUUID().toString(), "anonymousUser", null);
         }
     }
 
