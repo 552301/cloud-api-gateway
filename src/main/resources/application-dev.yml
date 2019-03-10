@@ -1,6 +1,6 @@
 spring:
   application:
-    name: zuul-server
+    name: zuul-server-dev
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -9,8 +9,8 @@ spring:
     password: zhanwei
   cloud:
     consul:
-      host: 121.42.143.130
-      port: 8500
+      host: 118.31.46.174
+      port: 30085
       enabled: true
       discovery:
         health-check-path: /actuator/health
@@ -27,6 +27,6 @@ logging:
     ROOT: info
 
 cassandra:
-  host: 118.31.46.174
+  host: 121.42.143.130
   keyspace: gateway
   port: 9042

@@ -9,7 +9,7 @@ spring:
     password: zhanwei
   cloud:
     consul:
-      host: 118.31.46.174
+      host: 172.16.175.221
       port: 30085
       enabled: true
       discovery:
