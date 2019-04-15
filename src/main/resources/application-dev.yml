@@ -9,8 +9,8 @@ spring:
     password: zhanwei
   cloud:
     consul:
-      host: 118.31.46.174
-      port: 30085
+      host: 121.42.143.130
+      port: 8500
       enabled: true
       discovery:
         health-check-path: /actuator/health

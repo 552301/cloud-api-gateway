@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: prod
+    active: dev
 
 ######### Token相关配置
 ### secret 计算token用到的签名
