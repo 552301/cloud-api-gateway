@@ -54,7 +54,7 @@ public class DynamicZuulRouteLocatorImpl implements DynamicZuulRouteService {
     public ResultBody add(ZuulRouteInfoAddParam param) {
         ZuulRouteInfo args = new ZuulRouteInfo();
         BeanUtils.copyProperties(param, args);
-        args.setId(UUID.randomUUID().toString().replaceAll("-",""));
+        args.setId(UUID.randomUUID().toString().replaceAll("-", ""));
         args = zuulRouteInfoDao.save(args);
         if (args.getId() == null) {
             return ResultBody.success(RestCodeEnum.ZUUL_ROUTE_ADD_ERROR, param);

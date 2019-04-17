@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 
 @Configuration
-public class WebServerAutoConfiguration {
+public class WebErrorPageConfigurer {
 
     @Bean
     public ConfigurableServletWebServerFactory configurableServletWebServerFactory() {

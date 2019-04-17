@@ -16,7 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 )
 
 @EnableJpaRepositories(
-        basePackages = {"com.cloud.zuul.dao.mysql","com.cloud.security.dao"}
+        basePackages = {"com.cloud.zuul.dao.mysql", "com.cloud.security.dao"}
 )
 @EnableCassandraRepositories(
         basePackages = {"com.cloud.zuul.dao.cassandra"}

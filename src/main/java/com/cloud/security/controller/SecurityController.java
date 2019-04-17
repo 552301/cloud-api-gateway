@@ -4,7 +4,8 @@ package com.cloud.security.controller;
 import com.cloud.common.RestCodeEnum;
 import com.cloud.common.ResultBody;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,7 +44,7 @@ public class SecurityController {
     @RequestMapping(value = "/error/403", produces = {"text/html"})
     public String error403Page(HttpServletRequest request) {
         Object requestUrl = request.getAttribute("javax.servlet.forward.request_uri");
-        return "redirect:/login?redirect="+requestUrl;
+        return "redirect:/login?redirect=" + requestUrl;
     }
 
     @RequestMapping(value = "/error/403")

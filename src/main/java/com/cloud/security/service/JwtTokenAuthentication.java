@@ -43,7 +43,7 @@ public class JwtTokenAuthentication implements AuthenticationProvider {
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("USER");
         authorities.add(simpleGrantedAuthority);
 
-        if ( jwt != null ) {
+        if (jwt != null) {
             log.info("Token解析成功");
             return new JwtAuthenticationToken(jwt.getBody().getId(), token, authorities);
         } else {
