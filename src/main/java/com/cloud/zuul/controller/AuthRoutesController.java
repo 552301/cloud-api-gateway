@@ -3,7 +3,7 @@ package com.cloud.zuul.controller;
 
 import com.cloud.common.RestCodeEnum;
 import com.cloud.common.ResultBody;
-import com.cloud.zuul.feign.system.ApiAuthRoutesService;
+import com.cloud.security.service.feign.ApiAuthRoutesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

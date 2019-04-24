@@ -11,10 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @SpringBootApplication
 @EnableZuulProxy
 @EnableAuthorizationServer
-@EnableFeignClients(
-        basePackages = {"com.cloud.zuul.feign"}
-)
-
+@EnableFeignClients
 @EnableJpaRepositories(
         basePackages = {"com.cloud.zuul.dao.mysql", "com.cloud.security.dao"}
 )
