@@ -13,7 +13,7 @@ spring:
       port: 8500
       enabled: true
       discovery:
-        health-check-path: /system/actuator/health
+        health-check-path: /actuator/health
         prefer-ip-address: true
         ip-address: 182.254.165.72
   ### 调用追踪配置
