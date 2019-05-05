@@ -9,11 +9,11 @@ spring:
     password: zhanwei
   cloud:
     consul:
-      host: 172.16.175.221
-      port: 30085
+      host: 121.42.143.130
+      port: 8500
       enabled: true
       discovery:
-        health-check-path: /actuator/health
+        health-check-path: /system/actuator/health
         prefer-ip-address: true
         ip-address: 182.254.165.72
   ### 调用追踪配置
