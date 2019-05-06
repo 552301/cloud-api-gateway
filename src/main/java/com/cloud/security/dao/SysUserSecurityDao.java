@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface SysUserSecurityDao extends JpaRepository<SysUserSecurity, Integer> {
 
-    @Query(value = "select user_id, username, password, enable from sys_user_security where username=?1 and del_flag = 0 limit 0,1", nativeQuery = true)
+    @Query(value = "select user_id, username, password, enable, create_time, update_time, del_flag from sys_user_security where username=?1 and del_flag = 0 limit 0,1", nativeQuery = true)
     SysUserSecurity findByUsername(@Param(value = "username") String username);
 }
