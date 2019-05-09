@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 
-@FeignClient(value = "system", url = "http://localhost:8081")
+@FeignClient(value = "system")
 public interface ApiAuthRoutesService {
 
     /**
