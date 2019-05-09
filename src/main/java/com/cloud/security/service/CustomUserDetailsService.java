@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 
 @Component
@@ -27,6 +29,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             log.info("用户不存在，{}", s);
             throw new UsernameNotFoundException("用户名不存在");
         }
-        return new User(element.getUsername(), element.getPassword(), new ArrayList<>());
+        return new User(element.getUserId().toString(), element.getPassword(), new LinkedList<>());
     }
 }

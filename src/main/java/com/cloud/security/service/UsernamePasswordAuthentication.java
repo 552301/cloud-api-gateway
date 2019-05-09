@@ -55,9 +55,9 @@ public class UsernamePasswordAuthentication implements AuthenticationProvider {
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("USER");
         authorities.add(simpleGrantedAuthority);
 
-        if (username.equals(userDetails.getUsername()) && passwordEncoder.matches(password.toString(), userDetails.getPassword())) {
-            log.info("用户名密码校验成功.用户名是：{}", username);
-            return new UsernamePasswordAuthenticationToken(username, password, authorities);
+        if (passwordEncoder.matches(password.toString(), userDetails.getPassword())) {
+            log.info("用户名密码校验成功.用户名是：{}", userDetails.getUsername());
+            return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), password, authorities);
         } else {
             log.info("用户名或密码错误，用户名是：{}", userDetails);
             throw new BadCredentialsException("用户名或密码错误");

@@ -81,6 +81,7 @@ public class UsernamePasswordLoginFilter extends AbstractAuthenticationProcessin
                 .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000))
                 .signWith(SignatureAlgorithm.HS512, AUTHORIZATION_SECRET)
                 .setId(auth.getName())
+                .claim("X-user-id",auth.getPrincipal())
                 .compact();
 
         String saltToken = AUTHORIZATION_SALT_KEY + token;

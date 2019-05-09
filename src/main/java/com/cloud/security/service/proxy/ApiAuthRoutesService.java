@@ -1,4 +1,4 @@
-package com.cloud.security.service.feign;
+package com.cloud.security.service.proxy;
 
 import com.cloud.common.ResultBody;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 
-@FeignClient(value = "system", url = "http://129.204.236.64:8080")
+@FeignClient(value = "system", url = "http://localhost:8081")
 public interface ApiAuthRoutesService {
 
     /**

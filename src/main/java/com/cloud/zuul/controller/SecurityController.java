@@ -1,4 +1,4 @@
-package com.cloud.security.controller;
+package com.cloud.zuul.controller;
 
 
 import com.cloud.common.RestCodeEnum;
