@@ -1,7 +1,7 @@
 package com.cloud.zuul.filter;
 
 import com.cloud.common.HeaderConstants;
-import com.cloud.zuul.dao.cassandra.ZuulForwardLoggerDao;
+import com.cloud.zuul.dao.ZuulForwardLoggerDao;
 import com.cloud.zuul.entity.ZuulForwardLogger;
 import com.google.gson.Gson;
 import com.netflix.zuul.ZuulFilter;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.context.annotation.Configuration;
 
+import java.sql.Timestamp;
 import java.util.Map;
 import java.util.UUID;
 
@@ -56,8 +57,8 @@ public class PostFilter extends ZuulFilter {
         element.setMethod(method);
         element.setPath(path);
         element.setStatus(String.valueOf(status));
-        element.setStartTime(String.valueOf(startTime));
-        element.setEndTime(String.valueOf(System.currentTimeMillis()));
+        element.setStartTime(new Timestamp(Long.valueOf(String.valueOf(startTime))));
+        element.setEndTime(new Timestamp(System.currentTimeMillis()));
         zuulForwardLoggerDao.save(element);
         return null;
     }

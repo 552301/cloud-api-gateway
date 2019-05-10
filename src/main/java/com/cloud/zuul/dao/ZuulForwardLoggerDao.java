@@ -1,5 +1,4 @@
-package com.cloud.zuul.dao.cassandra;
-
+package com.cloud.zuul.dao;
 
 import com.cloud.zuul.entity.ZuulForwardLogger;
 import org.springframework.data.repository.CrudRepository;

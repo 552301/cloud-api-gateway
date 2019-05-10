@@ -1,7 +1,7 @@
 package com.cloud.zuul.config;
 
 import com.cloud.common.HeaderConstants;
-import com.cloud.zuul.dao.cassandra.ZuulForwardLoggerDao;
+import com.cloud.zuul.dao.ZuulForwardLoggerDao;
 import com.cloud.zuul.entity.ZuulForwardLogger;
 import com.google.gson.Gson;
 import org.aspectj.lang.JoinPoint;
@@ -18,6 +18,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 import java.util.Map;
 import java.util.UUID;
 
@@ -58,13 +59,13 @@ public class ControllerListener {
 
         Object startTime = request.getAttribute(HeaderConstants.X_REQUEST_START);
         if (startTime != null) {
-            element.setStartTime(String.valueOf(startTime));
+            element.setStartTime(new Timestamp(Long.valueOf(String.valueOf(startTime))));
         }
 
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
         element.setStatus(String.valueOf(response.getStatus()));
 
-        element.setEndTime(String.valueOf(System.currentTimeMillis()));
+        element.setEndTime(new Timestamp(System.currentTimeMillis()));
         zuulForwardLoggerDao.save(element);
     }
 }

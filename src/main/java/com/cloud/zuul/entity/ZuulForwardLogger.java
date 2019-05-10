@@ -2,44 +2,48 @@ package com.cloud.zuul.entity;
 
 
 import lombok.Data;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.sql.Timestamp;
 
 
 @Data
-@Table(value = "zuul_forward_logger")
+@Table(name = "zuul_forward_logger")
+@Entity
 public class ZuulForwardLogger {
 
-    @PrimaryKey
-    @Column(value = "id")
+    @Id
+    @Column(name = "id")
     private String id;
 
-    @Column(value = "method")
+    @Column(name = "method")
     private String method;
 
-    @Column(value = "path")
+    @Column(name = "path")
     private String path;
 
-    @Column(value = "username")
+    @Column(name = "username")
     private String username;
 
-    @Column(value = "query")
+    @Column(name = "query")
     private String query;
 
-    @Column(value = "body")
+    @Column(name = "body")
     private String body;
 
-    @Column(value = "message")
+    @Column(name = "message")
     private String message;
 
-    @Column(value = "start_time")
-    private String startTime;
+    @Column(name = "start_time")
+    private Timestamp startTime;
 
-    @Column(value = "end_time")
-    private String endTime;
+    @Column(name = "end_time")
+    private Timestamp endTime;
 
-    @Column(value = "status")
+    @Column(name = "status")
     private String status;
 
 }

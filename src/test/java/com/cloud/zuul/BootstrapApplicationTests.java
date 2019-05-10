@@ -1,7 +1,7 @@
 package com.cloud.zuul;
 
-import com.cloud.zuul.dao.cassandra.ZuulForwardLoggerDao;
-import com.cloud.zuul.dao.mysql.ZuulRouteInfoDao;
+import com.cloud.zuul.dao.ZuulForwardLoggerDao;
+import com.cloud.zuul.dao.ZuulRouteInfoDao;
 import com.cloud.zuul.entity.ZuulRouteInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;

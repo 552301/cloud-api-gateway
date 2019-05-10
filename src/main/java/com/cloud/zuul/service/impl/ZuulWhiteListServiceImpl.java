@@ -2,7 +2,7 @@ package com.cloud.zuul.service.impl;
 
 import com.cloud.common.RestCodeEnum;
 import com.cloud.common.ResultBody;
-import com.cloud.zuul.dao.mysql.ZuulWhiteListDao;
+import com.cloud.zuul.dao.ZuulWhiteListDao;
 import com.cloud.zuul.entity.ZuulWhiteList;
 import com.cloud.zuul.service.ZuulWhiteListService;
 import com.cloud.zuul.vo.ZuulWhiteListVo;

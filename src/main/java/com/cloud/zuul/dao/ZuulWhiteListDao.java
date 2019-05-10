@@ -1,4 +1,4 @@
-package com.cloud.zuul.dao.mysql;
+package com.cloud.zuul.dao;
 
 import com.cloud.zuul.entity.ZuulWhiteList;
 import org.springframework.data.jpa.repository.JpaRepository;

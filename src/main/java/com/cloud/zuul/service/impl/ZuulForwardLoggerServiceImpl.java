@@ -1,7 +1,7 @@
 package com.cloud.zuul.service.impl;
 
 import com.cloud.common.ResultBody;
-import com.cloud.zuul.dao.cassandra.ZuulForwardLoggerDao;
+import com.cloud.zuul.dao.ZuulForwardLoggerDao;
 import com.cloud.zuul.entity.ZuulForwardLogger;
 import com.cloud.zuul.service.ZuulForwardLoggerService;
 import com.cloud.zuul.util.DateTimeUtil;
@@ -30,8 +30,8 @@ public class ZuulForwardLoggerServiceImpl implements ZuulForwardLoggerService {
         while (result.hasNext()) {
             ZuulForwardLogger item = result.next();
             // 日期格式转换
-            long st = Long.valueOf(item.getStartTime());
-            long et = Long.valueOf(item.getEndTime());
+            long st = item.getStartTime().getTime();
+            long et = item.getEndTime().getTime();
             String startTime = DateTimeUtil.dateformat(st);
             String endTime = DateTimeUtil.dateformat(et);
 

@@ -1,6 +1,6 @@
 package com.cloud.zuul.service.impl;
 
-import com.cloud.zuul.dao.mysql.ZuulRouteInfoDao;
+import com.cloud.zuul.dao.ZuulRouteInfoDao;
 import com.cloud.zuul.entity.ZuulRouteInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
